@@ -1,0 +1,106 @@
+.ios-switch {
+  appearance: none;
+  -webkit-appearance: none;
+  position: relative;
+  flex-shrink: 0;
+  width: 51px;
+  height: 31px;
+  margin: 0;
+  border-radius: 999px;
+  background: var(--fill);
+  transition: background-color 250ms var(--ease-out);
+  cursor: pointer;
+}
+.ios-switch::before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 27px;
+  height: 27px;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 3px 8px rgb(0 0 0 / 0.15), 0 3px 1px rgb(0 0 0 / 0.06);
+  transition: transform var(--dur-spring) var(--ease-spring);
+}
+.ios-switch:checked { background: var(--green); }
+.ios-switch:checked::before { transform: translateX(20px); }
+.ios-switch:disabled { opacity: 0.4; }
+
+/* On iOS Safari the native switch already looks and feels right, so hand it back. */
+@supports (-webkit-touch-callout: none) {
+  .ios-switch {
+    appearance: auto;
+    -webkit-appearance: auto;
+    width: auto;
+    height: auto;
+    background: none;
+    accent-color: var(--green);
+  }
+  .ios-switch::before { content: none; }
+}
+
+.sheet-overlay[data-state="open"] { animation: fade-in 260ms var(--ease-out); }
+.sheet-overlay[data-state="closed"] { animation: fade-out 200ms var(--ease-out); }
+.sheet-panel[data-state="open"] { animation: sheet-up var(--dur-spring) var(--ease-spring); }
+.sheet-panel[data-state="closed"] { animation: sheet-down 220ms var(--ease-out); }
+@media (min-width: 744px) {
+  .sheet-panel[data-state="open"] { animation: pop-in 340ms var(--ease-spring); }
+  .sheet-panel[data-state="closed"] { animation: pop-out 180ms var(--ease-out); }
+}
+@keyframes fade-in { from { opacity: 0; } }
+@keyframes fade-out { to { opacity: 0; } }
+@keyframes sheet-up { from { transform: translateY(100%); } }
+@keyframes sheet-down { to { transform: translateY(100%); } }
+@keyframes pop-in { from { opacity: 0; transform: scale(0.94); } }
+@keyframes pop-out { to { opacity: 0; transform: scale(0.96); } }
+
+.scroll-edge-top {
+  -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent);
+  mask-image: linear-gradient(to bottom, #000 55%, transparent);
+}
+.scroll-edge-bottom {
+  -webkit-mask-image: linear-gradient(to top, #000 45%, transparent);
+  mask-image: linear-gradient(to top, #000 45%, transparent);
+}
+
+/* Push/pop page transitions (View Transitions API). The tab bar keeps its own name so it doesn't slide. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 360ms;
+  animation-timing-function: var(--ease-out);
+}
+:root[data-nav="forward"]::view-transition-old(root) { animation-name: vt-out-left; }
+:root[data-nav="forward"]::view-transition-new(root) { animation-name: vt-in-right; }
+:root[data-nav="back"]::view-transition-old(root) { animation-name: vt-out-right; }
+:root[data-nav="back"]::view-transition-new(root) { animation-name: vt-in-left; }
+@keyframes vt-out-left { to { transform: translateX(-25%); opacity: 0.6; } }
+@keyframes vt-in-right { from { transform: translateX(100%); } }
+@keyframes vt-out-right { to { transform: translateX(100%); } }
+@keyframes vt-in-left { from { transform: translateX(-25%); opacity: 0.6; } }
+.vt-tabbar { view-transition-name: tabbar; }
+.vt-sidebar { view-transition-name: sidebar; }
+::view-transition-group(sidebar),
+::view-transition-group(tabbar),
+::view-transition-old(sidebar),
+::view-transition-new(sidebar),
+::view-transition-old(tabbar),
+::view-transition-new(tabbar) { animation: none; }
+
+@keyframes hud-in { from { opacity: 0; transform: translate(-50%, -12px) scale(0.96); } }
+.hud { animation: hud-in 280ms var(--ease-spring); }
+
+@keyframes spin { to { transform: rotate(360deg); } }
+.spinner { animation: spin 0.8s linear infinite; }
+
+@keyframes shimmer { 0% { background-position: -200px 0; } 100% { background-position: calc(200px + 100%) 0; } }
+.skeleton {
+  background: linear-gradient(90deg, var(--fill-4) 0, var(--fill-2) 50%, var(--fill-4) 100%);
+  background-size: 200px 100%;
+  animation: shimmer 1.2s infinite linear;
+}
+
+@media print {
+  .no-print { display: none !important; }
+  body { background: #fff !important; }
+}

@@ -1,0 +1,35 @@
+ENVIRONMENT=development
+# At least 32 random characters (e.g. `openssl rand -hex 32`); signs order links and encrypts integration keys.
+APP_SECRET=
+# Google OAuth web client. Leave empty locally to use /api/auth/dev-login.
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+# Web Push VAPID keys: public = raw P-256 key (base64url), private = JWK JSON.
+VAPID_PUBLIC_KEY=
+VAPID_PRIVATE_JWK=
+VAPID_SUBJECT=mailto:you@example.com
+# Optional locally; checkout skips Turnstile when empty outside production.
+TURNSTILE_SECRET=
+
+# Phase 3 integrations, all optional. Each one also has to be listed in FEATURES (wrangler.jsonc vars,
+# or FEATURES=email,qris,... here to try it locally); otherwise it stays hidden even with secrets set.
+# Transactional email (resend.com free tier).
+RESEND_API_KEY=
+EMAIL_FROM=Bawaan <notifikasi@bawaan.my.id>
+# Custom domains via Cloudflare for SaaS: token with "SSL and Certificates: Edit" on the zone.
+CF_API_TOKEN=
+CF_ZONE_ID=
+# Hostname sellers point their CNAME at (the zone's fallback origin).
+CUSTOM_DOMAIN_TARGET=domain.bawaan.my.id
+# Sign in with Apple: Services ID, team, key id and the .p8 key (PEM, newlines as \n).
+APPLE_CLIENT_ID=
+APPLE_TEAM_ID=
+APPLE_KEY_ID=
+APPLE_PRIVATE_KEY=
+# Courier rates and tracking (biteship.com).
+BITESHIP_API_KEY=
+# Comma-separated Google emails allowed into the platform admin.
+PLATFORM_ADMINS=
+# Bawaan's own Xendit account for Pro plan payments. Without it, Pro is paid by manual transfer.
+PLATFORM_XENDIT_KEY=
+PLATFORM_XENDIT_CALLBACK_TOKEN=

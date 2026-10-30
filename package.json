@@ -1,0 +1,21 @@
+{
+  "name": "bawaan",
+  "private": true,
+  "description": "Aplikasi jastip: PO per trip, toko online, tagihan DP & pelunasan, belanja offline, dan kargo. Cloudflare Workers + D1 + R2.",
+  "license": "MIT",
+  "repository": "github:rizalahmaddd/bawaan",
+  "packageManager": "pnpm@10.24.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @bawaan/web dev",
+    "build": "pnpm --filter @bawaan/web build",
+    "typecheck": "pnpm -r typecheck",
+    "test": "pnpm -r test",
+    "e2e": "pnpm --filter @bawaan/web e2e",
+    "deploy:preview": "pnpm --filter @bawaan/web deploy:preview",
+    "deploy:production": "pnpm --filter @bawaan/web deploy:production",
+    "db:migrate:local": "pnpm --filter @bawaan/web db:migrate:local"
+  }
+}

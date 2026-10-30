@@ -1,0 +1,161 @@
+/* iOS system colors and materials. Light values first, dark values follow the system unless data-theme overrides. */
+:root {
+  color-scheme: light dark;
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  --font-rounded: ui-rounded, "SF Pro Rounded", var(--font);
+
+  --tint: #007aff;
+  --tint-text: #0040dd;
+  --green: #34c759;
+  --green-text: #1f7a35;
+  --orange: #ff9500;
+  --orange-text: #c93400;
+  --red: #ff3b30;
+  --red-text: #c20012;
+  --indigo: #5856d6;
+  --indigo-text: #3634a3;
+  --teal: #30b0c7;
+  --gray: #8e8e93;
+  --gray-text: #6c6c70;
+
+  --label: #000;
+  /* iOS uses 0.6; raised so secondary text passes WCAG AA on grouped backgrounds. */
+  --label-2: rgb(60 60 67 / 0.76);
+  --label-3: rgb(60 60 67 / 0.3);
+  --label-4: rgb(60 60 67 / 0.18);
+  --bg: #fff;
+  --bg-grouped: #f2f2f7;
+  --bg-elevated: #fff;
+  --bg-elevated-2: #f2f2f7;
+  --bg-card: #f2f2f7;
+  --fill: rgb(120 120 128 / 0.2);
+  --fill-2: rgb(120 120 128 / 0.16);
+  --fill-3: rgb(118 118 128 / 0.12);
+  --fill-4: rgb(116 116 128 / 0.08);
+  --separator: rgb(60 60 67 / 0.29);
+  --segment-thumb: #fff;
+
+  --glass: rgb(255 255 255 / 0.6);
+  --glass-strong: rgb(255 255 255 / 0.82);
+  --glass-edge: rgb(255 255 255 / 0.75);
+  --glass-shade: rgb(0 0 0 / 0.06);
+  --glass-shadow: 0 10px 30px -8px rgb(0 0 0 / 0.18), 0 2px 6px rgb(0 0 0 / 0.06);
+  --glass-blur: blur(24px) saturate(180%);
+  --scrim: rgb(0 0 0 / 0.25);
+
+  --radius-row: 12px;
+  --radius-card: 26px;
+  --radius-sheet: 34px;
+  --tap: 44px;
+  --gutter: 16px;
+
+  --ease-spring: linear(0, 0.009, 0.035 2.1%, 0.141 4.4%, 0.723 12.9%, 0.938 16.7%, 1.017 19.4%, 1.043 22%, 1.042 24.8%, 1.007 32.2%, 0.996 37.4%, 1.001 51.9%, 1);
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --dur-spring: 480ms;
+
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --tint: #0a84ff;
+    --tint-text: #409cff;
+    --green: #30d158;
+    --green-text: #30d158;
+    --orange: #ff9f0a;
+    --orange-text: #ff9f0a;
+    --red: #ff453a;
+    --red-text: #ff6961;
+    --indigo: #5e5ce6;
+    --indigo-text: #8f8cff;
+    --teal: #40c8e0;
+    --gray: #8e8e93;
+    --gray-text: #aeaeb2;
+    --label: #fff;
+    --label-2: rgb(235 235 245 / 0.6);
+    --label-3: rgb(235 235 245 / 0.3);
+    --label-4: rgb(235 235 245 / 0.16);
+    --bg: #000;
+    --bg-grouped: #000;
+    --bg-elevated: #1c1c1e;
+    --bg-elevated-2: #2c2c2e;
+    --bg-card: #1c1c1e;
+    --fill: rgb(120 120 128 / 0.36);
+    --fill-2: rgb(120 120 128 / 0.32);
+    --fill-3: rgb(118 118 128 / 0.24);
+    --fill-4: rgb(118 118 128 / 0.18);
+    --separator: rgb(84 84 88 / 0.65);
+    --segment-thumb: #636366;
+    --glass: rgb(40 40 44 / 0.55);
+    --glass-strong: rgb(36 36 40 / 0.85);
+    --glass-edge: rgb(255 255 255 / 0.14);
+    --glass-shade: rgb(0 0 0 / 0.3);
+    --glass-shadow: 0 10px 30px -8px rgb(0 0 0 / 0.6), 0 2px 6px rgb(0 0 0 / 0.3);
+    --scrim: rgb(0 0 0 / 0.5);
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --tint: #0a84ff;
+  --tint-text: #409cff;
+  --green: #30d158;
+  --green-text: #30d158;
+  --orange: #ff9f0a;
+  --orange-text: #ff9f0a;
+  --red: #ff453a;
+  --red-text: #ff6961;
+  --indigo: #5e5ce6;
+  --indigo-text: #8f8cff;
+  --teal: #40c8e0;
+  --gray: #8e8e93;
+  --gray-text: #aeaeb2;
+  --label: #fff;
+  --label-2: rgb(235 235 245 / 0.6);
+  --label-3: rgb(235 235 245 / 0.3);
+  --label-4: rgb(235 235 245 / 0.16);
+  --bg: #000;
+  --bg-grouped: #000;
+  --bg-elevated: #1c1c1e;
+  --bg-elevated-2: #2c2c2e;
+  --bg-card: #1c1c1e;
+  --fill: rgb(120 120 128 / 0.36);
+  --fill-2: rgb(120 120 128 / 0.32);
+  --fill-3: rgb(118 118 128 / 0.24);
+  --fill-4: rgb(118 118 128 / 0.18);
+  --separator: rgb(84 84 88 / 0.65);
+  --segment-thumb: #636366;
+  --glass: rgb(40 40 44 / 0.55);
+  --glass-strong: rgb(36 36 40 / 0.85);
+  --glass-edge: rgb(255 255 255 / 0.14);
+  --glass-shade: rgb(0 0 0 / 0.3);
+  --glass-shadow: 0 10px 30px -8px rgb(0 0 0 / 0.6), 0 2px 6px rgb(0 0 0 / 0.3);
+  --scrim: rgb(0 0 0 / 0.5);
+}
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+@media (prefers-contrast: more) {
+  :root {
+    --label-2: color-mix(in srgb, var(--label) 80%, transparent);
+    --separator: color-mix(in srgb, var(--label) 45%, transparent);
+    --glass: var(--glass-strong);
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  :root {
+    --glass: var(--bg-elevated);
+    --glass-strong: var(--bg-elevated);
+    --glass-blur: none;
+  }
+}
+:root[data-transparency="reduce"] {
+  --glass: var(--bg-elevated);
+  --glass-strong: var(--bg-elevated);
+  --glass-blur: none;
+}

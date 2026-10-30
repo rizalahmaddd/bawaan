@@ -1,0 +1,45 @@
+{
+  "name": "@bawaan/web",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc -b",
+    "test": "vitest run",
+    "e2e": "playwright test",
+    "cf-typegen": "wrangler types worker/worker-configuration.d.ts",
+    "db:migrate:local": "wrangler d1 migrations apply DB --local",
+    "deploy:preview": "wrangler d1 migrations apply DB --remote --env preview && CLOUDFLARE_ENV=preview vite build && wrangler deploy",
+    "deploy:production": "wrangler d1 migrations apply DB --remote && vite build && wrangler deploy"
+  },
+  "dependencies": {
+    "@bawaan/shared": "workspace:*",
+    "@tanstack/react-query": "^5.105.0",
+    "drizzle-orm": "^0.45.4",
+    "hono": "^4.13.14",
+    "lucide-react": "^1.8.1",
+    "qrcode-generator": "1.4.4",
+    "radix-ui": "^1.4.3",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@cloudflare/vite-plugin": "^1.66.0",
+    "@cloudflare/vitest-plugin": "^1.4.10",
+    "@playwright/test": "^1.64.1",
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/node": "^22.19.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "drizzle-kit": "^0.31.11",
+    "tailwindcss": "^4.3.3",
+    "typescript": "~5.9.3",
+    "vite": "^8.0.0",
+    "vitest": "^4.1.0",
+    "wrangler": "^4.155.0"
+  }
+}

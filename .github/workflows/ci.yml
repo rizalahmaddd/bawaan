@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm typecheck
+      - run: cp apps/web/.dev.vars.example apps/web/.dev.vars && echo "APP_SECRET=$(openssl rand -hex 32)" >> apps/web/.dev.vars
+      - run: pnpm test
+      - run: pnpm db:migrate:local
+      - run: pnpm --filter @bawaan/web exec playwright install --with-deps chromium webkit
+      # Baselines are rendered on macOS; Linux font rendering differs, so CI checks behaviour only.
+      - run: pnpm e2e --ignore-snapshots
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright
+          path: apps/web/test-results
+
+  deploy:
+    needs: test
+    # Forks and fresh clones skip this until the repo opts in with a CLOUDFLARE_DEPLOY variable.
+    if: vars.CLOUDFLARE_DEPLOY == 'true'
+    runs-on: ubuntu-latest
+    environment: ${{ github.event_name == 'push' && 'production' || 'preview' }}
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - if: github.event_name == 'pull_request'
+        run: pnpm deploy:preview
+      - if: github.event_name == 'push'
+        run: pnpm deploy:production

@@ -1,0 +1,76 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "bawaan",
+  "account_id": "b0a62759a61b3e4dc25c7d83ad85e223",
+  "main": "./worker/index.ts",
+  "compatibility_date": "2026-10-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": { "enabled": true },
+  "assets": {
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    // Hashed bundles and static files skip the Worker so they never count against the free request quota.
+    "run_worker_first": ["/*", "!/assets/*", "!/icons/*", "!/favicon.svg", "!/manifest.webmanifest", "!/robots.txt", "!/sw.js"]
+  },
+  "vars": {
+    "ENVIRONMENT": "production",
+    "ROOT_DOMAIN": "bawaan.my.id",
+    "TURNSTILE_SITE_KEY": "",
+    // Third-party integrations to switch on, comma-separated: email, apple, courier, domains, qris, wa_cloud, platform_gateway.
+    "FEATURES": "",
+    // Bawaan's own WhatsApp support line, shown to sellers on the Paket page.
+    "SUPPORT_WA": "085777775477",
+    // Static QRIS payload Pro subscriptions are paid to; each invoice turns it into a dynamic QRIS with the exact amount.
+    "PLATFORM_QRIS": "00020101021126570011ID.DANA.WWW011893600915393002264102099300226410303UMI51440014ID.CO.QRIS.WWW0215ID10254105692850303UMI5204511153033605802ID5911RZ Printing6011Kab. Malang61056515863049A39"
+  },
+  "triggers": { "crons": ["7 * * * *"] },
+  "ratelimits": [
+    { "name": "TRACK_LIMITER", "namespace_id": "1001", "simple": { "limit": 10, "period": 60 } },
+    { "name": "WRITE_LIMITER", "namespace_id": "1002", "simple": { "limit": 20, "period": 60 } }
+  ],
+  "routes": [
+    { "pattern": "bawaan.my.id", "custom_domain": true },
+    { "pattern": "www.bawaan.my.id", "custom_domain": true },
+    { "pattern": "app.bawaan.my.id", "custom_domain": true },
+    { "pattern": "accounts.bawaan.my.id", "custom_domain": true },
+    // Needs a proxied wildcard DNS record (* AAAA 100::) in the zone.
+    { "pattern": "*.bawaan.my.id/*", "zone_name": "bawaan.my.id" }
+  ],
+  "workers_dev": false,
+  "d1_databases": [
+    { "binding": "DB", "database_name": "bawaan-core", "database_id": "75813881-7333-4d4e-a205-1f429031b53e", "migrations_dir": "../../migrations" }
+  ],
+  "kv_namespaces": [{ "binding": "HOSTS", "id": "0207105558024783ad9421604a18a91d" }],
+  "r2_buckets": [
+    { "binding": "PUBLIC_BUCKET", "bucket_name": "bawaan-public" },
+    { "binding": "PRIVATE_BUCKET", "bucket_name": "bawaan-private" }
+  ],
+  "env": {
+    "preview": {
+      "name": "bawaan-preview",
+      "workers_dev": true,
+      "routes": [],
+      "vars": {
+        "ENVIRONMENT": "preview",
+        "ROOT_DOMAIN": "bawaan.my.id",
+        "TURNSTILE_SITE_KEY": "",
+        "FEATURES": "",
+        "SUPPORT_WA": "085777775477",
+        "PLATFORM_QRIS": "00020101021126570011ID.DANA.WWW011893600915393002264102099300226410303UMI51440014ID.CO.QRIS.WWW0215ID10254105692850303UMI5204511153033605802ID5911RZ Printing6011Kab. Malang61056515863049A39"
+      },
+      "triggers": { "crons": [] },
+      "ratelimits": [
+        { "name": "TRACK_LIMITER", "namespace_id": "2001", "simple": { "limit": 10, "period": 60 } },
+        { "name": "WRITE_LIMITER", "namespace_id": "2002", "simple": { "limit": 20, "period": 60 } }
+      ],
+      "d1_databases": [
+        { "binding": "DB", "database_name": "bawaan-core-preview", "database_id": "32d74437-c97e-4d06-bccf-56a5c6e20cba", "migrations_dir": "../../migrations" }
+      ],
+      "kv_namespaces": [{ "binding": "HOSTS", "id": "577d5bf102404c67a1d0b58a0ff0da0e" }],
+      "r2_buckets": [
+        { "binding": "PUBLIC_BUCKET", "bucket_name": "bawaan-public-preview" },
+        { "binding": "PRIVATE_BUCKET", "bucket_name": "bawaan-private-preview" }
+      ]
+    }
+  }
+}

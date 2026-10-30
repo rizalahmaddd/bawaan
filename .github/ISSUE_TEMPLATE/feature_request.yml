@@ -1,0 +1,19 @@
+name: Usulan fitur
+description: Ide untuk membuat Bawaan lebih berguna bagi seller jastip
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Masalah yang ingin diselesaikan
+      description: Ceritakan situasi nyata di jastip yang belum terbantu.
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: Usulan solusi
+  - type: textarea
+    id: alt
+    attributes:
+      label: Cara yang dipakai sekarang

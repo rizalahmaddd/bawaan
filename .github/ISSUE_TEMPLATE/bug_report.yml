@@ -1,0 +1,33 @@
+name: Laporan bug
+description: Ada yang tidak berjalan seperti seharusnya
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Untuk celah keamanan, jangan pakai issue publik. Ikuti SECURITY.md.
+  - type: textarea
+    id: what
+    attributes:
+      label: Apa yang terjadi?
+      description: Jelaskan yang terjadi dan apa yang seharusnya terjadi.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Langkah reproduksi
+      placeholder: |
+        1. Buka ...
+        2. Klik ...
+        3. Muncul ...
+    validations:
+      required: true
+  - type: input
+    id: where
+    attributes:
+      label: Perangkat dan browser
+      placeholder: iPhone 15, Safari 26 / Windows 11, Chrome 140
+  - type: textarea
+    id: logs
+    attributes:
+      label: Pesan error atau tangkapan layar
